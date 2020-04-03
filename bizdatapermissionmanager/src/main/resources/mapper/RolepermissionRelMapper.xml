@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbg.bizdatapermissionmanager.dao.RolepermissionRelDao">
+
+    <resultMap id="rolepermissionRelEntityResultMap" type="com.bbg.bizdatapermissionmanager.entity.RolepermissionRelEntity">
+        <result column="tenantId" property="tenantId"/>
+        <result column="rprId" property="rprId"/>
+        <result column="roleId" property="roleId"/> 
+        <result column="pdrId" property="pdrId"/> 
+        <result column="status" property="status"/> 
+        <result column="creater" property="creater"/> 
+        <result column="createTime" property="createTime"/> 
+        <result column="lastmodifier" property="lastmodifier"/> 
+        <result column="lastmodifiTime" property="lastmodifiTime"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="rolepermissionRelEntityColumns">
+        rolepermission_rel.TENANT_ID AS "tenantId",
+        rolepermission_rel.RPR_ID AS "rprId",
+        rolepermission_rel.ROLE_ID AS "roleId",
+        rolepermission_rel.PDR_ID AS "pdrId",
+        rolepermission_rel.STATUS AS "status",
+        rolepermission_rel.CREATER AS "creater",
+        rolepermission_rel.CREATE_TIME AS "createTime",
+        rolepermission_rel.LASTMODIFIER AS "lastmodifier",
+        rolepermission_rel.LASTMODIFI_TIME AS "lastmodifiTime"
+    </sql>
+
+    <sql id="rolepermissionRelEntityJoins">
+        
+    </sql>
+
+    <select id="getRolepermissionRelEntity" resultMap="rolepermissionRelEntityResultMap">
+        SELECT
+        rolepermission_rel.TENANT_ID AS "tenantId",
+        rolepermission_rel.RPR_ID AS "rprId",
+        rolepermission_rel.ROLE_ID AS "roleId",
+        rolepermission_rel.PDR_ID AS "pdrId",
+        rolepermission_rel.STATUS AS "status",
+        rolepermission_rel.CREATER AS "creater",
+        rolepermission_rel.CREATE_TIME AS "createTime",
+        rolepermission_rel.LASTMODIFIER AS "lastmodifier",
+        rolepermission_rel.LASTMODIFI_TIME AS "lastmodifiTime",
+
+        process_dimension_rel.PDR_ID AS "pdrId",
+        process_dimension_rel.PDR_CODE AS "pdrCode",
+        process_dimension_rel.PDR_NAME AS "pdrName",
+        process_dimension_rel.PDR_DESC AS "pdrDesc",
+        process_dimension_rel.BPD_CODE AS "bpdCode",
+        process_dimension_rel.DUD_CODE AS "dudCode",
+        process_dimension_rel.PERMIT_PVALUE AS "permitPvalue",
+        process_dimension_rel.PERMIT_VALUE AS "permitValue",
+        process_dimension_rel.PERMIT_TYPE AS "permitType",
+        process_dimension_rel.STATUS AS "pdrStatus",
+
+        bizscope_process_define.BPD_NAME AS "bpdName",
+        bizscope_process_define.BPD_DESC AS "bpdDesc",
+        bizscope_process_define.BPD_SRVCODE AS "bpdSrvcode",
+        bizscope_process_define.BPD_SRVDESC AS "bpdSrvdesc",
+        bizscope_process_define.STATUS AS "bpdStatus",
+
+        dimension_unit_define.DUD_NAME AS "dudName",
+        dimension_unit_define.DUD_DESC AS "dudDesc",
+        dimension_unit_define.DUD_ISEFFECTIVE AS "dudIseffective",
+        dimension_unit_define.DUD_SREURL AS "dudSreurl",
+        dimension_unit_define.DUD_OBKEY AS "dudObkey",
+        dimension_unit_define.DUD_OBPKEY AS "dudObpkey",
+        dimension_unit_define.DUD_PCODE AS "dudPcode",
+        dimension_unit_define.STATUS AS "dudStatus"
+
+        FROM rolepermission_rel
+        LEFT  JOIN  process_dimension_rel on rolepermission_rel.PDR_ID = process_dimension_rel.PDR_ID
+        LEFT JOIN bizscope_process_define on process_dimension_rel.BPD_CODE = bizscope_process_define.BPD_CODE
+        LEFT JOIN dimension_unit_define on process_dimension_rel.DUD_CODE = dimension_unit_define.DUD_CODE
+
+        <where>
+
+            1=1
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and rolepermission_rel.TENANT_ID = #{entity.tenantId}
+            </if>
+            <if test="entity.rprId != null and entity.rprId != '' ">
+                and rolepermission_rel.RPR_ID = #{entity.rprId}
+            </if>
+
+            <if test="entity.roleId != null and entity.roleId != '' ">
+                and rolepermission_rel.ROLE_ID = #{entity.roleId}
+            </if>
+            <if test="entity.pdrId != null and entity.pdrId != '' ">
+                and rolepermission_rel.PDR_ID = #{entity.pdrId}
+            </if>
+
+            <if test="entity.status != null and entity.status != '' ">
+                and rolepermission_rel.STATUS = #{entity.status}
+            </if>
+
+
+
+            <if test="entity.pdrCode != null and entity.pdrCode != '' ">
+                and process_dimension_rel.PDR_CODE = #{entity.pdrCode}
+            </if>
+            <if test="entity.pdrName != null and entity.pdrName != '' ">
+                and process_dimension_rel.PDR_NAME = #{entity.pdrName}
+            </if>
+            <if test="entity.pdrDesc != null and entity.pdrDesc != '' ">
+                and process_dimension_rel.PDR_DESC = #{entity.pdrDesc}
+            </if>
+            <if test="entity.bpdCode != null and entity.bpdCode != '' ">
+                and process_dimension_rel.BPD_CODE = #{entity.bpdCode}
+            </if>
+            <if test="entity.dudCode != null and entity.dudCode != '' ">
+                and process_dimension_rel.DUD_CODE = #{entity.dudCode}
+            </if>
+            <if test="entity.permitPvalue != null and entity.permitPvalue != '' ">
+                and process_dimension_rel.PERMIT_PVALUE = #{entity.permitPvalue}
+            </if>
+            <if test="entity.permitValue != null and entity.permitValue != '' ">
+                and process_dimension_rel.PERMIT_VALUE = #{entity.permitValue}
+            </if>
+            <if test="entity.permitType != null and entity.permitType != '' ">
+                and process_dimension_rel.PERMIT_TYPE = #{entity.permitType}
+            </if>
+            <if test="entity.pdrStatus != null and entity.pdrStatus != '' ">
+                and process_dimension_rel.STATUS = #{entity.pdrStatus}
+            </if>
+
+
+            <if test="entity.bpdName != null and entity.bpdName != '' ">
+                and bizscope_process_define.BPD_NAME = #{entity.bpdName}
+            </if>
+            <if test="entity.bpdDesc != null and entity.bpdDesc != '' ">
+                and bizscope_process_define.BPD_DESC = #{entity.bpdDesc}
+            </if>
+            <if test="entity.bpdSrvcode != null and entity.bpdSrvcode != '' ">
+                and bizscope_process_define.BPD_SRVCODE = #{entity.bpdSrvcode}
+            </if>
+            <if test="entity.bpdSrvdesc != null and entity.bpdSrvdesc != '' ">
+                and bizscope_process_define.BPD_SRVDESC = #{entity.bpdSrvdesc}
+            </if>
+            <if test="entity.bpdStatus != null and entity.bpdStatus != '' ">
+                and bizscope_process_define.STATUS = #{entity.bpdStatus}
+            </if>
+
+
+            <if test="entity.dudName != null and entity.dudName != '' ">
+                and dimension_unit_define.DUD_NAME = #{entity.dudName}
+            </if>
+            <if test="entity.dudDesc != null and entity.dudDesc != '' ">
+                and dimension_unit_define.DUD_DESC = #{entity.dudDesc}
+            </if>
+            <if test="entity.dudIseffective != null and entity.dudIseffective != '' ">
+                and dimension_unit_define.DUD_ISEFFECTIVE = #{entity.dudIseffective}
+            </if>
+            <if test="entity.dudSreurl != null and entity.dudSreurl != '' ">
+                and dimension_unit_define.DUD_SREURL = #{entity.dudSreurl}
+            </if>
+            <if test="entity.dudObkey != null and entity.dudObkey != '' ">
+                and dimension_unit_define.DUD_OBKEY = #{entity.dudObkey}
+            </if>
+            <if test="entity.dudObpkey != null and entity.dudObpkey != '' ">
+                and dimension_unit_define.DUD_OBPKEY = #{entity.dudObpkey}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and dimension_unit_define.DUD_PCODE = #{entity.dudPcode}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and dimension_unit_define.STATUS = #{entity.dudStatus}
+            </if>
+
+        </where>
+
+        limit 1
+    </select>
+
+    <select id="selPageList" resultMap="rolepermissionRelEntityResultMap">
+        <bind name="offset" value="(page.current-1)*page.size"></bind>
+
+        SELECT
+        <include refid="rolepermissionRelEntityColumns" />
+        FROM rolepermission_rel <include refid="rolepermissionRelEntityJoins" />
+        <where>
+            1=1
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and TENANT_ID = #{entity.tenantId}
+            </if>
+            <if test="entity.rprId != null and entity.rprId != '' ">
+                and RPR_ID = #{entity.rprId}
+            </if>
+
+            <if test="entity.roleId != null and entity.roleId != '' ">
+                and ROLE_ID = #{entity.roleId}
+            </if>
+            <if test="entity.pdrId != null and entity.pdrId != '' ">
+                and PDR_ID = #{entity.pdrId}
+            </if>
+
+            <if test="entity.status != null and entity.status != '' ">
+                and STATUS = #{entity.status}
+            </if>
+        </where>
+
+
+        ORDER BY LASTMODIFI_TIME desc
+        limit #{offset},#{page.size};
+
+
+    </select>
+
+    <select id="count" resultType="int">
+
+        SELECT
+        count(1)
+        FROM rolepermission_rel <include refid="rolepermissionRelEntityJoins" />
+        <where>
+            1=1
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and TENANT_ID = #{entity.tenantId}
+            </if>
+            <if test="entity.rprId != null and entity.rprId != '' ">
+                and RPR_ID = #{entity.rprId}
+            </if>
+
+            <if test="entity.roleId != null and entity.roleId != '' ">
+                and ROLE_ID = #{entity.roleId}
+            </if>
+            <if test="entity.pdrId != null and entity.pdrId != '' ">
+                and PDR_ID = #{entity.pdrId}
+            </if>
+
+            <if test="entity.status != null and entity.status != '' ">
+                and STATUS = #{entity.status}
+            </if>
+        </where>
+
+
+    </select>
+
+    <select id="findList" resultMap="rolepermissionRelEntityResultMap">
+        SELECT
+            rolepermission_rel.TENANT_ID AS "tenantId",
+            rolepermission_rel.RPR_ID AS "rprId",
+            rolepermission_rel.ROLE_ID AS "roleId",
+            rolepermission_rel.PDR_ID AS "pdrId",
+            rolepermission_rel.STATUS AS "status",
+            rolepermission_rel.CREATER AS "creater",
+            rolepermission_rel.CREATE_TIME AS "createTime",
+            rolepermission_rel.LASTMODIFIER AS "lastmodifier",
+            rolepermission_rel.LASTMODIFI_TIME AS "lastmodifiTime",
+
+            process_dimension_rel.PDR_ID AS "pdrId",
+            process_dimension_rel.PDR_CODE AS "pdrCode",
+            process_dimension_rel.PDR_NAME AS "pdrName",
+            process_dimension_rel.PDR_DESC AS "pdrDesc",
+            process_dimension_rel.BPD_CODE AS "bpdCode",
+            process_dimension_rel.DUD_CODE AS "dudCode",
+            process_dimension_rel.PERMIT_PVALUE AS "permitPvalue",
+            process_dimension_rel.PERMIT_VALUE AS "permitValue",
+            process_dimension_rel.PERMIT_TYPE AS "permitType",
+            process_dimension_rel.STATUS AS "pdrStatus",
+
+            bizscope_process_define.BPD_NAME AS "bpdName",
+            bizscope_process_define.BPD_DESC AS "bpdDesc",
+            bizscope_process_define.BPD_SRVCODE AS "bpdSrvcode",
+            bizscope_process_define.BPD_SRVDESC AS "bpdSrvdesc",
+            bizscope_process_define.STATUS AS "bpdStatus",
+
+            dimension_unit_define.DUD_NAME AS "dudName",
+            dimension_unit_define.DUD_DESC AS "dudDesc",
+            dimension_unit_define.DUD_ISEFFECTIVE AS "dudIseffective",
+            dimension_unit_define.DUD_SREURL AS "dudSreurl",
+            dimension_unit_define.DUD_OBKEY AS "dudObkey",
+            dimension_unit_define.DUD_OBPKEY AS "dudObpkey",
+            dimension_unit_define.DUD_PCODE AS "dudPcode",
+            dimension_unit_define.STATUS AS "dudStatus"
+
+        FROM rolepermission_rel
+        LEFT  JOIN  process_dimension_rel on rolepermission_rel.PDR_ID = process_dimension_rel.PDR_ID
+        LEFT JOIN bizscope_process_define on process_dimension_rel.BPD_CODE = bizscope_process_define.BPD_CODE
+        LEFT JOIN dimension_unit_define on process_dimension_rel.DUD_CODE = dimension_unit_define.DUD_CODE
+
+        <where>
+
+            1=1
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and rolepermission_rel.TENANT_ID = #{entity.tenantId}
+            </if>
+            <if test="entity.rprId != null and entity.rprId != '' ">
+                and rolepermission_rel.RPR_ID = #{entity.rprId}
+            </if>
+
+            <if test="entity.roleId != null and entity.roleId != '' ">
+                and rolepermission_rel.ROLE_ID = #{entity.roleId}
+            </if>
+            <if test="entity.pdrId != null and entity.pdrId != '' ">
+                and rolepermission_rel.PDR_ID = #{entity.pdrId}
+            </if>
+
+            <if test="entity.status != null and entity.status != '' ">
+                and rolepermission_rel.STATUS = #{entity.status}
+            </if>
+
+
+
+            <if test="entity.pdrCode != null and entity.pdrCode != '' ">
+                and process_dimension_rel.PDR_CODE = #{entity.pdrCode}
+            </if>
+            <if test="entity.pdrName != null and entity.pdrName != '' ">
+                and process_dimension_rel.PDR_NAME = #{entity.pdrName}
+            </if>
+            <if test="entity.pdrDesc != null and entity.pdrDesc != '' ">
+                and process_dimension_rel.PDR_DESC = #{entity.pdrDesc}
+            </if>
+            <if test="entity.bpdCode != null and entity.bpdCode != '' ">
+                and process_dimension_rel.BPD_CODE = #{entity.bpdCode}
+            </if>
+            <if test="entity.dudCode != null and entity.dudCode != '' ">
+                and process_dimension_rel.DUD_CODE = #{entity.dudCode}
+            </if>
+            <if test="entity.permitPvalue != null and entity.permitPvalue != '' ">
+                and process_dimension_rel.PERMIT_PVALUE = #{entity.permitPvalue}
+            </if>
+            <if test="entity.permitValue != null and entity.permitValue != '' ">
+                and process_dimension_rel.PERMIT_VALUE = #{entity.permitValue}
+            </if>
+            <if test="entity.permitType != null and entity.permitType != '' ">
+                and process_dimension_rel.PERMIT_TYPE = #{entity.permitType}
+            </if>
+            <if test="entity.pdrStatus != null and entity.pdrStatus != '' ">
+                and process_dimension_rel.STATUS = #{entity.pdrStatus}
+            </if>
+
+
+            <if test="entity.bpdName != null and entity.bpdName != '' ">
+                and bizscope_process_define.BPD_NAME = #{entity.bpdName}
+            </if>
+            <if test="entity.bpdDesc != null and entity.bpdDesc != '' ">
+                and bizscope_process_define.BPD_DESC = #{entity.bpdDesc}
+            </if>
+            <if test="entity.bpdSrvcode != null and entity.bpdSrvcode != '' ">
+                and bizscope_process_define.BPD_SRVCODE = #{entity.bpdSrvcode}
+            </if>
+            <if test="entity.bpdSrvdesc != null and entity.bpdSrvdesc != '' ">
+                and bizscope_process_define.BPD_SRVDESC = #{entity.bpdSrvdesc}
+            </if>
+            <if test="entity.bpdStatus != null and entity.bpdStatus != '' ">
+                and bizscope_process_define.STATUS = #{entity.bpdStatus}
+            </if>
+
+
+            <if test="entity.dudName != null and entity.dudName != '' ">
+                and dimension_unit_define.DUD_NAME = #{entity.dudName}
+            </if>
+            <if test="entity.dudDesc != null and entity.dudDesc != '' ">
+                and dimension_unit_define.DUD_DESC = #{entity.dudDesc}
+            </if>
+            <if test="entity.dudIseffective != null and entity.dudIseffective != '' ">
+                and dimension_unit_define.DUD_ISEFFECTIVE = #{entity.dudIseffective}
+            </if>
+            <if test="entity.dudSreurl != null and entity.dudSreurl != '' ">
+                and dimension_unit_define.DUD_SREURL = #{entity.dudSreurl}
+            </if>
+            <if test="entity.dudObkey != null and entity.dudObkey != '' ">
+                and dimension_unit_define.DUD_OBKEY = #{entity.dudObkey}
+            </if>
+            <if test="entity.dudObpkey != null and entity.dudObpkey != '' ">
+                and dimension_unit_define.DUD_OBPKEY = #{entity.dudObpkey}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and dimension_unit_define.DUD_PCODE = #{entity.dudPcode}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and dimension_unit_define.STATUS = #{entity.dudStatus}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="findAllList" resultMap="rolepermissionRelEntityResultMap">
+        SELECT
+        <include refid="rolepermissionRelEntityColumns" />
+        FROM rolepermission_rel <include refid="rolepermissionRelEntityJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO rolepermission_rel(
+            TENANT_ID,
+            RPR_ID,
+            ROLE_ID,
+            PDR_ID,
+            STATUS,
+            CREATER,
+            CREATE_TIME,
+            LASTMODIFIER,
+            LASTMODIFI_TIME
+        )
+        VALUES (
+            #{tenantId},
+            #{rprId},
+            #{roleId},
+            #{pdrId},
+            #{status},
+            #{creater},
+            #{createTime},
+            #{lastmodifier},
+            #{lastmodifiTime}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO rolepermission_rel(
+            TENANT_ID,
+            RPR_ID,
+            ROLE_ID,
+            PDR_ID,
+            STATUS,
+            CREATER,
+            CREATE_TIME,
+            LASTMODIFIER,
+            LASTMODIFI_TIME
+        )
+        VALUES
+        <foreach collection ="list" item="rolepermissionRelEntity" separator =",">
+        (
+            #{rolepermissionRelEntity.tenantId},
+            #{rolepermissionRelEntity.rprId},
+            #{rolepermissionRelEntity.roleId},
+            #{rolepermissionRelEntity.pdrId},
+            #{rolepermissionRelEntity.status},
+            #{rolepermissionRelEntity.creater},
+            #{rolepermissionRelEntity.createTime},
+            #{rolepermissionRelEntity.lastmodifier},
+            #{rolepermissionRelEntity.lastmodifiTime}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE rolepermission_rel SET
+        TENANT_ID = #{tenantId},
+        RPR_ID = #{rprId},
+        ROLE_ID = #{roleId},
+        PDR_ID = #{pdrId},
+        STATUS = #{status},
+        CREATER = #{creater},
+        CREATE_TIME = #{createTime},
+        LASTMODIFIER = #{lastmodifier},
+        LASTMODIFI_TIME = #{lastmodifiTime}
+        WHERE RPR_ID = #{rprId}
+    </update>
+
+    <update id="delete">
+        DELETE FROM rolepermission_rel
+        WHERE RPR_ID = #{rprId}
+    </update>
+
+    <update id="deleteRoleId">
+        DELETE FROM rolepermission_rel
+        WHERE ROLE_ID = #{roleId}
+    </update>
+
+    <update id="deletePdrId">
+        DELETE FROM rolepermission_rel
+        WHERE PDR_ID = #{pdrId}
+    </update>
+
+
+
+    <update id="deleteBatchPdrId" parameterType="java.util.List">
+        DELETE FROM rolepermission_rel
+        WHERE PDR_ID in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>

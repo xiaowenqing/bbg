@@ -1,0 +1,45 @@
+logging:
+    file: log.log
+    level:
+        com: info
+        com.bbg: info
+        com.bbg.bizdatapermissionmanager.mapper: debug
+        org: info
+mybatis-plus:
+    configuration:
+        map-underscore-to-camel-case: true
+    global-config:
+        db-column-underline: true
+        field-strategy: 2
+        id-type: 0
+    mapper-locations: mapper/*.xml
+    typeAliasesPackage: com.bbg.bizdatapermissionmanager
+server:
+    port: 8080
+    tomcat:
+        uri-encoding: UTF-8
+spring:
+    application:
+        name: bizdatapermission
+    banner:
+        charset: UTF-8
+    datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.7.165:3306/bizdatapermissionDB?characterEncoding=utf-8&useSSL=false
+      username: bizdatapermission
+      password: bizdatapermission@D1234
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+eureka:
+    client:
+        registry-fetch-interval-seconds: 10
+        serviceUrl:
+#          defaultZone: http://bbg:bbg1234@10.12.29.240:31025/eureka
+          defaultZone: http://localhost:8761/eureka
+    instance:
+        lease-expiration-duration-in-seconds: 20
+        lease-renewal-interval-in-seconds: 5
+        prefer-ip-address: true

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbg.bizdatapermissionmanager.dao.DimensionUnitDefineDao">
+
+    <resultMap id="dimensionUnitDefineEntityResultMap" type="com.bbg.bizdatapermissionmanager.entity.DimensionUnitDefineEntity">
+        <result column="tenantId" property="tenantId"/>
+        <result column="dudCode" property="dudCode"/>
+        <result column="dudName" property="dudName"/> 
+        <result column="dudDesc" property="dudDesc"/> 
+        <result column="dudIseffective" property="dudIseffective"/> 
+        <result column="dudSreurl" property="dudSreurl"/> 
+        <result column="dudObkey" property="dudObkey"/> 
+        <result column="dudObpkey" property="dudObpkey"/> 
+        <result column="dudPcode" property="dudPcode"/> 
+        <result column="status" property="status"/> 
+        <result column="creater" property="creater"/> 
+        <result column="createTime" property="createTime"/> 
+        <result column="lastmodifier" property="lastmodifier"/> 
+        <result column="lastmodifiTime" property="lastmodifiTime"/>
+
+        
+        
+    </resultMap>
+
+    <sql id="dimensionUnitDefineEntityColumns">
+        dimension_unit_define.TENANT_ID AS "tenantId",
+        dimension_unit_define.DUD_CODE AS "dudCode",
+        dimension_unit_define.DUD_NAME AS "dudName",
+        dimension_unit_define.DUD_DESC AS "dudDesc",
+        dimension_unit_define.DUD_ISEFFECTIVE AS "dudIseffective",
+        dimension_unit_define.DUD_SREURL AS "dudSreurl",
+        dimension_unit_define.DUD_OBKEY AS "dudObkey",
+        dimension_unit_define.DUD_OBPKEY AS "dudObpkey",
+        dimension_unit_define.DUD_PCODE AS "dudPcode",
+        dimension_unit_define.STATUS AS "status",
+        dimension_unit_define.CREATER AS "creater",
+        dimension_unit_define.CREATE_TIME AS "createTime",
+        dimension_unit_define.LASTMODIFIER AS "lastmodifier",
+        dimension_unit_define.LASTMODIFI_TIME AS "lastmodifiTime"
+    </sql>
+
+    <sql id="dimensionUnitDefineEntityJoins">
+        
+    </sql>
+
+    <select id="getDimensionUnitDefineEntity" resultMap="dimensionUnitDefineEntityResultMap">
+        SELECT
+        <include refid="dimensionUnitDefineEntityColumns" />
+        FROM dimension_unit_define <include refid="dimensionUnitDefineEntityJoins" />
+        <where>
+            1=1
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and TENANT_ID = #{entity.tenantId}
+            </if>
+
+            <if test="entity.dudCode != null and entity.dudCode != '' ">
+                and DUD_CODE = #{entity.dudCode}
+            </if>
+
+            <if test="entity.dudName != null and entity.dudName != '' ">
+                and DUD_NAME = #{entity.dudName}
+            </if>
+            <if test="entity.dudDesc != null and entity.dudDesc != '' ">
+                and DUD_DESC = #{entity.dudDesc}
+            </if>
+            <if test="entity.dudIseffective != null and entity.dudIseffective != '' ">
+                and DUD_ISEFFECTIVE = #{entity.dudIseffective}
+            </if>
+            <if test="entity.dudSreurl != null and entity.dudSreurl != '' ">
+                and DUD_SREURL = #{entity.dudSreurl}
+            </if>
+            <if test="entity.dudObkey != null and entity.dudObkey != '' ">
+                and DUD_OBKEY = #{entity.dudObkey}
+            </if>
+            <if test="entity.dudObpkey != null and entity.dudObpkey != '' ">
+                and DUD_OBPKEY = #{entity.dudObpkey}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and DUD_PCODE = #{entity.dudPcode}
+            </if>
+            <if test="entity.status != null and entity.status != '' ">
+                and STATUS = #{entity.status}
+            </if>
+        </where>
+
+        limit 1
+    </select>
+
+
+    <select id="selPageList" resultMap="dimensionUnitDefineEntityResultMap">
+        <bind name="offset" value="(page.current-1)*page.size"></bind>
+
+        SELECT
+        <include refid="dimensionUnitDefineEntityColumns" />
+        FROM dimension_unit_define <include refid="dimensionUnitDefineEntityJoins" />
+        <where>
+            1=1
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and TENANT_ID = #{entity.tenantId}
+            </if>
+
+            <if test="entity.dudCode != null and entity.dudCode != '' ">
+                and DUD_CODE like CONCAT('%',#{entity.dudCode},'%')
+            </if>
+
+            <if test="entity.dudName != null and entity.dudName != '' ">
+                and DUD_NAME like CONCAT('%',#{entity.dudName},'%')
+            </if>
+            <if test="entity.dudDesc != null and entity.dudDesc != '' ">
+                and DUD_DESC like CONCAT('%',#{entity.dudDesc},'%')
+            </if>
+            <if test="entity.dudIseffective != null and entity.dudIseffective != '' ">
+                and DUD_ISEFFECTIVE = #{entity.dudIseffective}
+            </if>
+            <if test="entity.dudSreurl != null and entity.dudSreurl != '' ">
+                and DUD_SREURL = #{entity.dudSreurl}
+            </if>
+            <if test="entity.dudObkey != null and entity.dudObkey != '' ">
+                and DUD_OBKEY = #{entity.dudObkey}
+            </if>
+            <if test="entity.dudObpkey != null and entity.dudObpkey != '' ">
+                and DUD_OBPKEY = #{entity.dudObpkey}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and DUD_PCODE = #{entity.dudPcode}
+            </if>
+            <if test="entity.status != null and entity.status != '' ">
+                and STATUS = #{entity.status}
+            </if>
+
+        </where>
+        ORDER BY LASTMODIFI_TIME desc
+        limit #{offset},#{page.size};
+
+
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT
+        count(1)
+        FROM dimension_unit_define <include refid="dimensionUnitDefineEntityJoins" />
+        <where>
+            1=1
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and TENANT_ID = #{entity.tenantId}
+            </if>
+
+            <if test="entity.dudCode != null and entity.dudCode != '' ">
+                and DUD_CODE like CONCAT('%',#{entity.dudCode},'%')
+            </if>
+
+            <if test="entity.dudName != null and entity.dudName != '' ">
+                and DUD_NAME like CONCAT('%',#{entity.dudName},'%')
+            </if>
+            <if test="entity.dudDesc != null and entity.dudDesc != '' ">
+                and DUD_DESC like CONCAT('%',#{entity.dudDesc},'%')
+            </if>
+            <if test="entity.dudIseffective != null and entity.dudIseffective != '' ">
+                and DUD_ISEFFECTIVE = #{entity.dudIseffective}
+            </if>
+            <if test="entity.dudSreurl != null and entity.dudSreurl != '' ">
+                and DUD_SREURL = #{entity.dudSreurl}
+            </if>
+            <if test="entity.dudObkey != null and entity.dudObkey != '' ">
+                and DUD_OBKEY = #{entity.dudObkey}
+            </if>
+            <if test="entity.dudObpkey != null and entity.dudObpkey != '' ">
+                and DUD_OBPKEY = #{entity.dudObpkey}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and DUD_PCODE = #{entity.dudPcode}
+            </if>
+            <if test="entity.status != null and entity.status != '' ">
+                and STATUS = #{entity.status}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectBpdCodePageList" resultType="com.bbg.bizdatapermissionmanager.common.dto.DimensionUnitDefineDto">
+        <bind name="offset" value="(page.current-1)*page.size"></bind>
+
+        select a.*,
+        if(a.dudCode in
+        (select distinct process_dimension_rel.DUD_CODE from process_dimension_rel
+        where process_dimension_rel.BPD_CODE = #{entity.bpdCode}),"1","0" ) isAssociated
+        from ( SELECT
+        dud.TENANT_ID AS "tenantId",
+        dud.DUD_CODE AS "dudCode",
+        dud.DUD_NAME AS "dudName",
+        dud.DUD_DESC AS "dudDesc",
+        dud.DUD_ISEFFECTIVE AS "dudIseffective",
+        dud.DUD_SREURL AS "dudSreurl",
+        dud.DUD_OBKEY AS "dudObkey",
+        dud.DUD_OBPKEY AS "dudObpkey",
+        dud.DUD_PCODE AS "dudPcode",
+        dud.STATUS AS "status",
+        dud.CREATER AS "creater",
+        dud.CREATE_TIME AS "createTime",
+        dud.LASTMODIFIER AS "lastmodifier",
+        dud.LASTMODIFI_TIME AS "lastmodifiTime"
+        FROM dimension_unit_define dud) a
+
+        GROUP BY a.dudCode
+        limit #{offset},#{page.size};
+
+
+    </select>
+
+    <select id="countBpdCodePageList" resultType="int">
+        select count(1)
+        from ( SELECT
+        dud.TENANT_ID AS "tenantId",
+        dud.DUD_CODE AS "dudCode",
+        dud.DUD_NAME AS "dudName",
+        dud.DUD_DESC AS "dudDesc",
+        dud.DUD_ISEFFECTIVE AS "dudIseffective",
+        dud.DUD_SREURL AS "dudSreurl",
+        dud.DUD_OBKEY AS "dudObkey",
+        dud.DUD_OBPKEY AS "dudObpkey",
+        dud.DUD_PCODE AS "dudPcode",
+        dud.STATUS AS "status",
+        dud.CREATER AS "creater",
+        dud.CREATE_TIME AS "createTime",
+        dud.LASTMODIFIER AS "lastmodifier",
+        dud.LASTMODIFI_TIME AS "lastmodifiTime"
+        FROM dimension_unit_define dud) a
+    </select>
+
+
+
+    <select id="selectBpdCodePage" resultMap="dimensionUnitDefineEntityResultMap">
+        <bind name="offset" value="(page.current-1)*page.size"></bind>
+
+        SELECT
+            dud.TENANT_ID AS "tenantId",
+            dud.DUD_CODE AS "dudCode",
+            dud.DUD_NAME AS "dudName",
+            dud.DUD_DESC AS "dudDesc",
+            dud.DUD_ISEFFECTIVE AS "dudIseffective",
+            dud.DUD_SREURL AS "dudSreurl",
+            dud.DUD_OBKEY AS "dudObkey",
+            dud.DUD_OBPKEY AS "dudObpkey",
+            dud.DUD_PCODE AS "dudPcode",
+            dud.STATUS AS "status",
+            dud.CREATER AS "creater",
+            dud.CREATE_TIME AS "createTime",
+            dud.LASTMODIFIER AS "lastmodifier",
+            dud.LASTMODIFI_TIME AS "lastmodifiTime"
+        FROM process_dimension_rel pdr
+
+        LEFT JOIN dimension_unit_define dud on pdr.DUD_CODE = dud.DUD_CODE
+
+        <where>
+            pdr.BPD_CODE=#{entity.bpdCode}
+
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and dud.TENANT_ID = #{entity.tenantId}
+            </if>
+
+            <if test="entity.dudCode != null and entity.dudCode != '' ">
+                and dud.DUD_CODE like CONCAT('%',#{entity.dudCode},'%')
+            </if>
+
+            <if test="entity.dudName != null and entity.dudName != '' ">
+                and dud.DUD_NAME like CONCAT('%',#{entity.dudName},'%')
+            </if>
+            <if test="entity.dudDesc != null and entity.dudDesc != '' ">
+                and dud.DUD_DESC like CONCAT('%',#{entity.dudDesc},'%')
+            </if>
+            <if test="entity.dudIseffective != null and entity.dudIseffective != '' ">
+                and dud.DUD_ISEFFECTIVE = #{entity.dudIseffective}
+            </if>
+            <if test="entity.dudSreurl != null and entity.dudSreurl != '' ">
+                and dud.DUD_SREURL = #{entity.dudSreurl}
+            </if>
+            <if test="entity.dudObkey != null and entity.dudObkey != '' ">
+                and dud.DUD_OBKEY = #{entity.dudObkey}
+            </if>
+            <if test="entity.dudObpkey != null and entity.dudObpkey != '' ">
+                and dud.DUD_OBPKEY = #{entity.dudObpkey}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and dud.DUD_PCODE = #{entity.dudPcode}
+            </if>
+            <if test="entity.status != null and entity.status != '' ">
+                and dud.STATUS = #{entity.status}
+            </if>
+
+        </where>
+        GROUP BY dud.DUD_CODE
+        limit #{offset},#{page.size};
+
+
+    </select>
+
+    <select id="countBpdCodePage" resultType="int">
+        select count(1) from(
+            SELECT
+            count(1)
+            FROM process_dimension_rel pdr
+
+            LEFT JOIN dimension_unit_define dud on pdr.DUD_CODE = dud.DUD_CODE
+
+            <where>
+                pdr.BPD_CODE=#{entity.bpdCode}
+
+                <if test="entity.tenantId != null and entity.tenantId != '' ">
+                    and dud.TENANT_ID = #{entity.tenantId}
+                </if>
+
+                <if test="entity.dudCode != null and entity.dudCode != '' ">
+                    and dud.DUD_CODE like CONCAT('%',#{entity.dudCode},'%')
+                </if>
+
+                <if test="entity.dudName != null and entity.dudName != '' ">
+                    and dud.DUD_NAME like CONCAT('%',#{entity.dudName},'%')
+                </if>
+                <if test="entity.dudDesc != null and entity.dudDesc != '' ">
+                    and dud.DUD_DESC like CONCAT('%',#{entity.dudDesc},'%')
+                </if>
+                <if test="entity.dudIseffective != null and entity.dudIseffective != '' ">
+                    and dud.DUD_ISEFFECTIVE = #{entity.dudIseffective}
+                </if>
+                <if test="entity.dudSreurl != null and entity.dudSreurl != '' ">
+                    and dud.DUD_SREURL = #{entity.dudSreurl}
+                </if>
+                <if test="entity.dudObkey != null and entity.dudObkey != '' ">
+                    and dud.DUD_OBKEY = #{entity.dudObkey}
+                </if>
+                <if test="entity.dudObpkey != null and entity.dudObpkey != '' ">
+                    and dud.DUD_OBPKEY = #{entity.dudObpkey}
+                </if>
+                <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                    and dud.DUD_PCODE = #{entity.dudPcode}
+                </if>
+                <if test="entity.status != null and entity.status != '' ">
+                    and dud.STATUS = #{entity.status}
+                </if>
+
+            </where>
+            GROUP BY dud.DUD_CODE
+        ) a
+    </select>
+
+
+    <select id="get" resultMap="dimensionUnitDefineEntityResultMap">
+        SELECT
+        <include refid="dimensionUnitDefineEntityColumns" />
+        FROM dimension_unit_define <include refid="dimensionUnitDefineEntityJoins" />
+        <where>
+        dimension_unit_define.DUD_CODE = #{id}
+        </where>
+    </select>
+
+    <select id="findList" resultMap="dimensionUnitDefineEntityResultMap">
+        SELECT
+        <include refid="dimensionUnitDefineEntityColumns" />
+        FROM dimension_unit_define <include refid="dimensionUnitDefineEntityJoins" />
+
+        <where>
+            1=1
+            <if test="entity.tenantId != null and entity.tenantId != '' ">
+                and TENANT_ID = #{entity.tenantId}
+            </if>
+
+            <if test="entity.dudCode != null and entity.dudCode != '' ">
+                and DUD_CODE like CONCAT('%',#{entity.dudCode},'%')
+            </if>
+
+            <if test="entity.dudName != null and entity.dudName != '' ">
+                and DUD_NAME like CONCAT('%',#{entity.dudName},'%')
+            </if>
+            <if test="entity.dudDesc != null and entity.dudDesc != '' ">
+                and DUD_DESC like CONCAT('%',#{entity.dudDesc},'%')
+            </if>
+            <if test="entity.dudIseffective != null and entity.dudIseffective != '' ">
+                and DUD_ISEFFECTIVE = #{entity.dudIseffective}
+            </if>
+            <if test="entity.dudSreurl != null and entity.dudSreurl != '' ">
+                and DUD_SREURL = #{entity.dudSreurl}
+            </if>
+            <if test="entity.dudObkey != null and entity.dudObkey != '' ">
+                and DUD_OBKEY = #{entity.dudObkey}
+            </if>
+            <if test="entity.dudObpkey != null and entity.dudObpkey != '' ">
+                and DUD_OBPKEY = #{entity.dudObpkey}
+            </if>
+            <if test="entity.dudPcode != null and entity.dudPcode != '' ">
+                and DUD_PCODE = #{entity.dudPcode}
+            </if>
+            <if test="entity.status != null and entity.status != '' ">
+                and STATUS = #{entity.status}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllList" resultMap="dimensionUnitDefineEntityResultMap">
+        SELECT
+        <include refid="dimensionUnitDefineEntityColumns" />
+        FROM dimension_unit_define <include refid="dimensionUnitDefineEntityJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO dimension_unit_define(
+            TENANT_ID,
+            DUD_CODE,
+            DUD_NAME,
+            DUD_DESC,
+            DUD_ISEFFECTIVE,
+            DUD_SREURL,
+            DUD_OBKEY,
+            DUD_OBPKEY,
+            DUD_PCODE,
+            STATUS,
+            CREATER,
+            CREATE_TIME,
+            LASTMODIFIER,
+            LASTMODIFI_TIME
+        )
+        VALUES (
+            #{tenantId},
+            #{dudCode},
+            #{dudName},
+            #{dudDesc},
+            #{dudIseffective},
+            #{dudSreurl},
+            #{dudObkey},
+            #{dudObpkey},
+            #{dudPcode},
+            #{status},
+            #{creater},
+            #{createTime},
+            #{lastmodifier},
+            #{lastmodifiTime}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO dimension_unit_define(
+            TENANT_ID,
+            DUD_CODE,
+            DUD_NAME,
+            DUD_DESC,
+            DUD_ISEFFECTIVE,
+            DUD_SREURL,
+            DUD_OBKEY,
+            DUD_OBPKEY,
+            DUD_PCODE,
+            STATUS,
+            CREATER,
+            CREATE_TIME,
+            LASTMODIFIER,
+            LASTMODIFI_TIME
+        )
+        VALUES
+        <foreach collection ="list" item="dimensionUnitDefineEntity" separator =",">
+        (
+            #{dimensionUnitDefineEntity.tenantId},
+            #{dimensionUnitDefineEntity.dudCode},
+            #{dimensionUnitDefineEntity.dudName},
+            #{dimensionUnitDefineEntity.dudDesc},
+            #{dimensionUnitDefineEntity.dudIseffective},
+            #{dimensionUnitDefineEntity.dudSreurl},
+            #{dimensionUnitDefineEntity.dudObkey},
+            #{dimensionUnitDefineEntity.dudObpkey},
+            #{dimensionUnitDefineEntity.dudPcode},
+            #{dimensionUnitDefineEntity.status},
+            #{dimensionUnitDefineEntity.creater},
+            #{dimensionUnitDefineEntity.createTime},
+            #{dimensionUnitDefineEntity.lastmodifier},
+            #{dimensionUnitDefineEntity.lastmodifiTime}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE dimension_unit_define SET
+        TENANT_ID = #{tenantId},
+        DUD_CODE = #{dudCode},
+        DUD_NAME = #{dudName},
+        DUD_DESC = #{dudDesc},
+        DUD_ISEFFECTIVE = #{dudIseffective},
+        DUD_SREURL = #{dudSreurl},
+        DUD_OBKEY = #{dudObkey},
+        DUD_OBPKEY = #{dudObpkey},
+        DUD_PCODE = #{dudPcode},
+        STATUS = #{status},
+        CREATER = #{creater},
+        CREATE_TIME = #{createTime},
+        LASTMODIFIER = #{lastmodifier},
+        LASTMODIFI_TIME = #{lastmodifiTime}
+        WHERE DUD_CODE = #{dudCode}
+    </update>
+
+    <update id="delete">
+        DELETE FROM dimension_unit_define
+        WHERE DUD_CODE = #{dudCode}
+    </update>
+
+</mapper>
